@@ -1,16 +1,45 @@
 /******************************************************/
 /*que interesante! asi se hace un random en javascript*/
- var min = 0;
- var max = 420;
+ var min = 0; //<-- variables para controlar el espacio del rango en base al mapa
+ var max = 420;/// mapa (500x500)
 // var z = Math.floor(Math.random()*(max-min+1))+min;
 // console.log(z);    //fin random basico*************
 /*****************************************************/
 var cv = document.getElementById('canvas');
 var papel = cv.getContext('2d');
-document.addEventListener("keyup", mueveLobo);
-
-function mueveLobo(){
-  
+document.addEventListener("keyup", mueveLobo);//<-- declaro evento tecla arriba en documento
+var tecla = {
+  UP: 38,
+  DOWN: 40,     /*// <- este es mi objeto JSON para manejo de teclas*/
+  LEFT: 37,
+  RIGHT: 39
+};
+var xl = 190; //<-- esta es la posicion del lobo (x,y)
+var yl = 190;
+var move = 10;
+function mueveLobo(e){
+  console.log(e);
+  switch(e.keyCode){ //<- evaluo con un caso el evento que se produce
+    case tecla.UP:
+    papel.drawImage(lobo.imagen, xl,yl-move);
+    yl -= move;
+    break;
+    case tecla.DOWN:
+      papel.drawImage(lobo.imagen, xl,yl+move);
+      yl += move;
+    break;
+    case tecla.LEFT:
+      papel.drawImage(lobo.imagen, xl-move,yl);
+      xl -= move;
+    break;
+    case tecla.RIGHT:
+    papel.drawImage(lobo.imagen, xl+move,yl);
+    xl += move;
+    break;
+    default:
+      console.log("otra tecla");
+    break;
+  }//fin casos
 }
 //var mapa = "tile.png";
 // var fondo = new Image();//<-objeto fondo de js.(fondp es una instancia (objeto) d la clase Image)
@@ -81,14 +110,7 @@ function cargaLobo(){
 /*********************************************************************************/
 //fondo.addEventListener("load", dibujar);//<--se añade a fondo evento carga
 function dibujar(){//al papel se le coloca fondo (obj preparado), ubicacion donde comienza
-  var tecla = {
-    UP: 38,
-    DOWN: 40,     /*// <- este es mi objeto JSON*/
-    LEFT: 37,
-    RIGHT: 39
-  };
-  var xl = 190;
-  var yl = 190;
+
   var cantVacas = aleatorio(-2,10);
   var cantCerdos = aleatorio(0,5);
   var cantPollos = aleatorio(1,10);
@@ -110,14 +132,14 @@ function dibujar(){//al papel se le coloca fondo (obj preparado), ubicacion dond
       var n = aleatorio(min,max);
       papel.drawImage(pollo.imagen,m,n);
     }//for pollo
-    papel.drawImage(lobo.imagen, xl,yl);
+    papel.drawImage(lobo.imagen, xl,yl-move)
   }
 }
 
 //------------------------------------------------------------------------------
 function aleatorio(maximo,minimo){
   var z = Math.floor(Math.random()*(maximo-minimo+1))+minimo;
-  console.log(z);
+  //console.log(z);
   return z; //<--realmente sin el return no m devuelve valor
 }
 // aleatorio(min,max);
