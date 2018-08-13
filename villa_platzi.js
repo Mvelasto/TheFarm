@@ -21,19 +21,19 @@ function mueveLobo(e){
   console.log(e);
   switch(e.keyCode){ //<- evaluo con un caso el evento que se produce
     case tecla.UP:
-    papel.drawImage(lobo.imagen, xl,yl-move);
+    dibujar(xl,yl);// <--pasa parametros de movimiento a la funcion dibujar
     yl -= move;
     break;
     case tecla.DOWN:
-      papel.drawImage(lobo.imagen, xl,yl+move);
+      dibujar(xl,yl);
       yl += move;
     break;
     case tecla.LEFT:
-      papel.drawImage(lobo.imagen, xl-move,yl);
+      dibujar(xl,yl);
       xl -= move;
     break;
     case tecla.RIGHT:
-    papel.drawImage(lobo.imagen, xl+move,yl);
+    dibujar(xl,yl);
     xl += move;
     break;
     default:
@@ -132,7 +132,7 @@ function dibujar(){//al papel se le coloca fondo (obj preparado), ubicacion dond
       var n = aleatorio(min,max);
       papel.drawImage(pollo.imagen,m,n);
     }//for pollo
-    papel.drawImage(lobo.imagen, xl,yl-move)
+    papel.drawImage(lobo.imagen, xl,yl)//<-- se le da los valores de acuerdo al movimiento
   }
 }
 
